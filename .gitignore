@@ -1,0 +1,8 @@
+/node_modules
+/src/store/actions/gameActions.js
+/src/store/actions/personActions.js
+/src/store/reducers/gameReducer.js
+/src/store/reducers/personReducer.js
+
+.env*
+
