@@ -1,10 +1,12 @@
 import { createStore, combineReducers } from 'redux'
 import noteReducer from './reducers/noteReducer'
 import filterReducer from './reducers/filterReducer'
+import searchReducer from './reducers/searchReducer.js'
 
 const reducer = combineReducers({
   notes: noteReducer,
-  filter: filterReducer,
+  filter1: filterReducer,
+  search: searchReducer,
 })
 
 const getId = () => (100000 * Math.random()).toFixed(0)
@@ -15,15 +17,25 @@ const initialStateNotes = [
     important: true,
     id: getId(),
   },
+  {
+    content: 'react',
+    important: true,
+    id: getId(),
+  },
+  {
+    content: 'fx',
+    important: false,
+    id: getId(),
+  },
 ]
 
 const initialStateFilter = 'ALL'
 
 const initialStates = {
   notes: initialStateNotes,
-  filter: initialStateFilter,
+  filter1: initialStateFilter,
+  search: '',
 }
-
 
 const store = createStore(
   reducer,

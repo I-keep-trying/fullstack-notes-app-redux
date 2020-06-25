@@ -1,11 +1,9 @@
 import React from 'react'
 import filterChange from '../store/actions/filterActions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const Filter = () => {
   const dispatch = useDispatch()
-  const filter = useSelector((state) => state.filter)
-  console.log('filter: ', filter)
   return (
     <div>
       all

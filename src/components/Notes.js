@@ -1,38 +1,76 @@
 import React from 'react'
-//import { connect } from 'react-redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleImportance } from '../store/actions/noteAction'
+import searchNotesAction from '../store/actions/searchAction'
 
-const Note = ({ note1, onClick }) => {
+const Note = ({ filtered, onClick }) => {
   return (
     <li>
-      {note1.content}
-      <strong>{note1.important ? 'important' : ''}</strong>
+      {filtered.content}
+      <strong>{filtered.important ? 'important' : ''}</strong>
       <button onClick={onClick}>important</button>
     </li>
   )
 }
 
 function Notes(props) {
-  const state = useSelector((state) => state)
-  console.log('Notes state: ', state)
   const dispatch = useDispatch()
-  const notes = useSelector(({ filter, notes }) => {
-    if (filter === 'ALL') {
+  const search = useSelector(({ search }) => search.payload)
+  const notes = useSelector(({ notes }) => notes)
+  const filter = useSelector(({ filter1 }) => filter1)
+  console.log('filter', filter)
+  let searchResults = !search
+    ? notes
+    : notes.filter((n) =>
+        n.content.toLowerCase().includes(search.toLowerCase())
+      )
+
+  const filteredSearch = () => {
+    if (filter === 'ALL' && !search) {
       return notes
     }
-    return filter === 'IMPORTANT'
+    if (filter === 'ALL' && search) {
+      return searchResults
+    }
+    filter === 'IMPORTANT' && !search
       ? notes.filter((note) => note.important)
       : notes.filter((note) => !note.important)
-  })
+    return filter === 'IMPORTANT'
+      ? searchResults.filter((note) => note.important)
+      : searchResults.filter((note) => !note.important)
+  }
+  console.log(
+    'searchResults',
+    searchResults.filter((note) => note.important)
+  )
+  console.log(
+    'filteredSearch',
+    filteredSearch().map((n) => n)
+  )
+  const handleReset = () => {
+    return (searchResults = notes)
+  }
+
+  const searchNotes = (e) => {
+    e.preventDefault()
+    const searchTerm = e.target.searchFor.value
+    e.target.searchFor.value = ''
+    dispatch(searchNotesAction(searchTerm))
+  }
 
   return (
     <div className="App">
+      <form onSubmit={searchNotes}>
+        <input name="searchFor" />
+        <button type="submit">search</button>
+        <button onClick={handleReset}>reset</button>
+      </form>
+      <hr />
       <ul>
-        {notes.map((n) => (
+        {filteredSearch().map((n) => (
           <Note
             key={n.id}
-            note1={n}
+            filtered={n}
             onClick={() => dispatch(toggleImportance(n.id))}
           />
         ))}

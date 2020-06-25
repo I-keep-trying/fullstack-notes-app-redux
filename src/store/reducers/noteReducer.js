@@ -11,8 +11,6 @@ const initialState = [
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const noteReducer = (state = [], { type, payload }) => {
-  console.log('state: ', state)
-  console.log('payload', payload)
   switch (type) {
     case 'NEW_NOTE':
       const newNote = {
@@ -28,9 +26,9 @@ const noteReducer = (state = [], { type, payload }) => {
         ...noteToChange,
         important: !noteToChange.important,
       }
-      console.log('toggle noteToChange', noteToChange)
       return state.map((note) => (note.id !== id ? note : changedNote))
     }
+
     default:
       return state
   }
