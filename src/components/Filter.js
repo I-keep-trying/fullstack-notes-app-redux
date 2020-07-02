@@ -6,7 +6,7 @@ const Filter = () => {
   const dispatch = useDispatch()
   return (
     <div>
-      all
+     filter: all
       <input
         type="radio"
         name="filter"

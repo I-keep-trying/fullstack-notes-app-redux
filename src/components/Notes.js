@@ -18,7 +18,6 @@ function Notes(props) {
   const search = useSelector(({ search }) => search.payload)
   const notes = useSelector(({ notes }) => notes)
   const filter = useSelector(({ filter1 }) => filter1)
-  console.log('filter', filter)
   let searchResults = !search
     ? notes
     : notes.filter((n) =>
@@ -39,14 +38,7 @@ function Notes(props) {
       ? searchResults.filter((note) => note.important)
       : searchResults.filter((note) => !note.important)
   }
-  console.log(
-    'searchResults',
-    searchResults.filter((note) => note.important)
-  )
-  console.log(
-    'filteredSearch',
-    filteredSearch().map((n) => n)
-  )
+
   const handleReset = () => {
     return (searchResults = notes)
   }

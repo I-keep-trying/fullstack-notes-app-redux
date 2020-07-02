@@ -1,24 +1,17 @@
-/* const getId = () => (100000 * Math.random()).toFixed(0)
-
-const initialState = [
-  {
-    content: 'note from initialState: the app state is in redux store',
-    important: true,
-    id: getId(),
-  },
-] */
-
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const noteReducer = (state = [], { type, payload }) => {
+  console.log('noteReducer payload', payload)
   switch (type) {
     case 'NEW_NOTE':
       const newNote = {
-        content: payload,
+        content: payload.content,
         important: false,
         id: getId(),
       }
       return [...state, newNote]
+    case 'INIT_NOTES':
+      return payload
     case 'TOGGLE_IMPORTANCE': {
       const id = payload
       const noteToChange = state.find((n) => n.id === id)

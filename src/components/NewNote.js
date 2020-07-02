@@ -5,10 +5,9 @@ import createNote from '../store/actions/noteAction'
 const NewNote = (props) => {
   const dispatch = useDispatch()
 
-  const addNote = (event) => {
+  const addNote = async (event) => {
     event.preventDefault()
     const content = event.target.note1.value
-    console.log('addNote e.target.note', content)
     event.target.note1.value = ''
     dispatch(createNote(content))
   }
@@ -16,7 +15,7 @@ const NewNote = (props) => {
   return (
     <form onSubmit={addNote}>
       <input name="note1" />
-      <button type="submit">add</button>
+      <button type="submit">add note</button>
     </form>
   )
 }
